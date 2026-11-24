@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simone & Robson — Nosso Casamento</title>
+    
+    <!-- Google Fonts: Fonte Caligráfica limpa + Serifada Clássica + Sans-Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#070D19',
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#334155',
+                        },
+                        royal: {
+                            800: '#1E40AF',
+                            700: '#1D4ED8',
+                            600: '#2563EB',
+                            500: '#3B82F6',
+                            100: '#DBEAFE',
+                            50: '#EFF6FF',
+                        },
+                        skysoft: '#93C5FD',
+                        goldsoft: '#E2C792'
+                    },
+                    fontFamily: {
+                        script: ['"Alex Brush"', 'cursive'],
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #F8FAFC;
+            color: #0F172A;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Correção de renderização para evitar pontinhos/serrilhados na fonte cursiva */
+        #hero-couple-names {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: geometricPrecision;
+            transform: translateZ(0);
+            paint-order: stroke fill;
+            -webkit-text-stroke: 0.35px rgba(255, 255, 255, 0.25);
+        }
+
+        /* Animação de Voo e Bater de Asas das Borboletas */
+        @keyframes floatButterfly {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px) rotate(0deg);
+            }
+            25% {
+                transform: translateY(-16px) translateX(10px) rotate(5deg);
+            }
+            50% {
+                transform: translateY(-6px) translateX(-8px) rotate(-4deg);
+            }
+            75% {
+                transform: translateY(-20px) translateX(6px) rotate(3deg);
+            }
+        }
+
+        @keyframes wingFlap {
+            0%, 100% {
+                transform: scaleX(1);
+            }
+            50% {
+                transform: scaleX(0.68);
+            }
+        }
+
+        .butterfly-float {
+            animation: floatButterfly 7s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .butterfly-float-delayed {
+            animation: floatButterfly 9s ease-in-out 2s infinite;
+            pointer-events: none;
+        }
+
+        .butterfly-float-slow {
+            animation: floatButterfly 11s ease-in-out 1s infinite;
+            pointer-events: none;
+        }
+
+        .butterfly-wings {
+            transform-origin: center;
+            animation: wingFlap 1.2s ease-in-out infinite;
+        }
+
+        /* Fundo da Capa sem attachment fixed para evitar artefatos de GPU */
+        .bg-hero-pattern {
+            position: relative;
+            background-image: linear-gradient(to bottom, rgba(7, 13, 25, 0.74), rgba(15, 23, 42, 0.88)),
+                              url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: scroll;
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1D4ED8;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0F172A;
+        }
+
+        #toast-container {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-royal-600 selection:text-white">
+
+    <!-- =====================================================================
+         CONFIGURAÇÃO DOS DADOS DO CASAMENTO
+         ===================================================================== -->
+    <script>
+        const WEDDING_CONFIG = {
+            brideName: "Simone",
+            groomName: "Robson",
+            weddingDateISO: "2026-12-19T19:30:00",
+            displayDate: "19 de Dezembro de 2026",
+            ceremony: {
+                title: "Cerimônia Religiosa",
+                time: "16h30",
+                venue: "Capela Santa Luzia",
+                address: "Av. das Hortênsias, 1450 - Jardim Imperial, São Paulo - SP",
+                mapsUrl: "https://www.google.com/maps/search/?api=1&query=Capela+Santa+Luzia+Sao+Paulo"
+            },
+            reception: {
+                title: "Recepção & Festa",
+                time: "19h30",
+                venue: "Espaço Villa Azul Eventos",
+                address: "Rua dos Lírios Brancos, 890 - Alto da Boa Vista, São Paulo - SP",
+                mapsUrl: "https://www.google.com/maps/search/?api=1&query=Alto+da+Boa+Vista+Sao+Paulo"
+            },
+            pixKey: "",
+            pixBeneficiary: "Simone & Robson"
+        };
+    </script>
+
+    <!-- =====================================================================
+         NOTIFICAÇÃO FLUTUANTE (TOAST)
+         ===================================================================== -->
+    <div id="toast-container" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-[100] translate-y-24 opacity-0 pointer-events-none">
+        <div class="bg-navy-900 text-white border border-royal-500/40 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 max-w-md">
+            <span id="toast-icon" class="w-7 h-7 rounded-full bg-royal-600 flex items-center justify-center shrink-0 text-sm">✓</span>
+            <p id="toast-message" class="text-sm font-medium leading-snug">Ação realizada com sucesso!</p>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         BOTÃO FLUTUANTE DO CARRINHO DE PRESENTES
+         ===================================================================== -->
+    <button onclick="toggleCartDrawer(true)" aria-label="Abrir Carrinho de Presentes"
+        class="fixed bottom-6 right-6 z-40 bg-royal-700 hover:bg-navy-900 text-white p-4 rounded-full shadow-2xl border-2 border-white/80 transition-all duration-300 flex items-center gap-2.5 group hover:scale-105">
+        <svg class="w-6 h-6 transition-transform group-hover:-rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+        </svg>
+        <span class="hidden sm:inline text-sm font-semibold pr-1">Presentes</span>
+        <span id="floating-cart-badge" class="bg-white text-royal-800 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center shadow">0</span>
+    </button>
+
+    <!-- =====================================================================
+         NAVEGAÇÃO SUPERIOR
+         ===================================================================== -->
+    <header class="fixed top-0 left-0 right-0 z-30 bg-navy-900/95 border-b border-white/10 text-white transition-all">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <a href="#inicio" class="flex items-center gap-2 group">
+                <svg class="w-6 h-6 text-skysoft group-hover:rotate-12 transition-transform" viewBox="0 0 64 64" fill="currentColor">
+                    <path d="M30 30C24 14 6 10 4 22c-2 10 12 16 24 12-10 4-14 14-6 18 6 3 10-6 10-16 0 10 4 19 10 16 8-4 4-14-6-18 12 4 26-2 24-12-2-12-20-8-26 8z"/>
+                </svg>
+                <span id="nav-monogram" class="font-serif text-xl tracking-wider font-semibold">S <span class="text-royal-400">&</span> R</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-widest font-medium text-slate-200">
+                <a href="#inicio" class="hover:text-skysoft transition-colors">Início</a>
+                <a href="#evento" class="hover:text-skysoft transition-colors">Cerimônia & Local</a>
+                <a href="#galeria" class="hover:text-skysoft transition-colors">Nossas Fotos</a>
+                <a href="#presentes" class="hover:text-skysoft transition-colors">Lista de Presentes</a>
+                <a href="#rsvp" class="hover:text-skysoft transition-colors">Confirmar Presença</a>
+                <a href="#recados" class="hover:text-skysoft transition-colors">Recados</a>
+            </nav>
+
+            <div class="flex items-center gap-3">
+                <button onclick="toggleCartDrawer(true)" class="relative p-2.5 rounded-xl bg-royal-700/80 hover:bg-royal-600 transition-colors flex items-center gap-1.5" title="Carrinho de Presentes">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                    </svg>
+                    <span id="nav-cart-badge" class="text-xs font-bold bg-white text-navy-900 px-1.5 py-0.5 rounded-full">0</span>
+                </button>
+
+                <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white" aria-label="Abrir menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-navy-900 border-t border-white/10 px-6 py-4 space-y-3 text-sm uppercase tracking-wider">
+            <a href="#inicio" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Início</a>
+            <a href="#evento" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Cerimônia & Local</a>
+            <a href="#galeria" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Nossas Fotos</a>
+            <a href="#presentes" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Lista de Presentes</a>
+            <a href="#rsvp" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Confirmar Presença</a>
+            <a href="#recados" onclick="toggleMobileMenu()" class="block py-2 text-slate-200 hover:text-skysoft">Recados aos Noivos</a>
+        </div>
+    </header>
+
+    <!-- =====================================================================
+         1. HERO / CAPA COM BORBOLETAS FLUTUANTES E CONTAGEM REGRESSIVA
+         ===================================================================== -->
+    <section id="inicio" class="relative min-h-screen flex items-center justify-center bg-hero-pattern text-white pt-20 pb-16 px-4 overflow-hidden">
+        
+        <!-- Borboleta Azul Royal Superior Esquerda -->
+        <div class="butterfly-float absolute top-24 left-6 sm:left-16 opacity-80">
+            <svg class="w-12 h-12 sm:w-16 sm:h-16 text-royal-500 butterfly-wings drop-shadow-lg" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+
+        <!-- Borboleta Branca Translúcida Superior Direita -->
+        <div class="butterfly-float-delayed absolute top-32 right-8 sm:right-20 opacity-60">
+            <svg class="w-10 h-10 sm:w-14 sm:h-14 text-white butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+
+        <!-- Borboleta Azul Celeste Inferior Esquerda -->
+        <div class="butterfly-float-slow absolute bottom-24 left-10 sm:left-28 opacity-55">
+            <svg class="w-9 h-9 sm:w-12 sm:h-12 text-skysoft butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+
+        <!-- Borboleta Azul Royal Inferior Direita -->
+        <div class="butterfly-float absolute bottom-28 right-8 sm:right-24 opacity-75">
+            <svg class="w-11 h-11 sm:w-14 sm:h-14 text-royal-400 butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+
+        <div class="relative z-10 max-w-3xl mx-auto text-center">
+            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm uppercase tracking-[0.25em] text-skysoft mb-6">
+                <span>Vamos nos casar</span>
+            </div>
+
+            <h1 id="hero-couple-names" class="font-script text-6xl sm:text-8xl md:text-9xl text-white mb-4 leading-tight">
+                Simone <span class="text-royal-400">&</span> Robson
+            </h1>
+
+            <p class="font-serif italic text-lg sm:text-2xl text-slate-200 max-w-xl mx-auto mb-8 leading-relaxed">
+                "Assim como as borboletas encontram o céu azul, nossos caminhos se encontraram para voar juntos para sempre."
+            </p>
+
+            <div class="flex items-center justify-center gap-4 mb-10">
+                <span class="h-px w-12 sm:w-20 bg-gradient-to-r from-transparent to-skysoft"></span>
+                <p id="hero-date" class="font-serif text-xl sm:text-2xl tracking-widest uppercase text-white font-semibold">
+                    19 de Dezembro de 2026
+                </p>
+                <span class="h-px w-12 sm:w-20 bg-gradient-to-l from-transparent to-skysoft"></span>
+            </div>
+
+            <!-- Contagem Regressiva ao Vivo -->
+            <div class="grid grid-cols-4 gap-2.5 sm:gap-5 max-w-lg mx-auto mb-10">
+                <div class="bg-navy-900/80 border border-royal-500/40 rounded-2xl p-3 sm:p-4 shadow-xl">
+                    <span id="cd-days" class="block font-serif text-2xl sm:text-4xl font-bold text-white">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-skysoft">Dias</span>
+                </div>
+                <div class="bg-navy-900/80 border border-royal-500/40 rounded-2xl p-3 sm:p-4 shadow-xl">
+                    <span id="cd-hours" class="block font-serif text-2xl sm:text-4xl font-bold text-white">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-skysoft">Horas</span>
+                </div>
+                <div class="bg-navy-900/80 border border-royal-500/40 rounded-2xl p-3 sm:p-4 shadow-xl">
+                    <span id="cd-minutes" class="block font-serif text-2xl sm:text-4xl font-bold text-white">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-skysoft">Min</span>
+                </div>
+                <div class="bg-navy-900/80 border border-royal-500/40 rounded-2xl p-3 sm:p-4 shadow-xl">
+                    <span id="cd-seconds" class="block font-serif text-2xl sm:text-4xl font-bold text-royal-400">00</span>
+                    <span class="text-[10px] sm:text-xs uppercase tracking-widest text-skysoft">Seg</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#rsvp" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-royal-600 hover:bg-royal-700 text-white font-semibold text-sm uppercase tracking-wider shadow-lg shadow-royal-900/50 transition-all hover:-translate-y-0.5">
+                    Confirmar Presença
+                </a>
+                <a href="#presentes" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-white/10 hover:bg-white hover:text-navy-900 border border-white/40 text-white font-semibold text-sm uppercase tracking-wider transition-all hover:-translate-y-0.5">
+                    Lista de Presentes
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIVISÓRIA DECORATIVA COM BORBOLETA -->
+    <div class="relative bg-white py-6 flex items-center justify-center overflow-hidden">
+        <div class="flex items-center gap-4 text-royal-700">
+            <span class="w-20 sm:w-36 h-px bg-gradient-to-r from-transparent via-royal-400 to-navy-900"></span>
+            <svg class="w-8 h-8 text-royal-700" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+            <span class="w-20 sm:w-36 h-px bg-gradient-to-l from-transparent via-royal-400 to-navy-900"></span>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         2. LOCALIZAÇÃO, DATA E HORA (CERIMÔNIA & RECEPÇÃO)
+         ===================================================================== -->
+    <section id="evento" class="py-16 sm:py-24 px-4 bg-white relative overflow-hidden">
+        <svg class="absolute -right-8 top-12 w-48 h-48 text-royal-50 opacity-80 pointer-events-none rotate-12" viewBox="0 0 64 64" fill="currentColor">
+            <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+        </svg>
+
+        <div class="max-w-5xl mx-auto relative z-10">
+            <div class="text-center mb-14">
+                <span class="text-royal-700 font-semibold text-xs uppercase tracking-[0.25em]">Quando & Onde</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-navy-900 font-bold mt-2">Cerimônia & Recepção</h2>
+                <p class="text-slate-600 mt-3 max-w-xl mx-auto text-sm sm:text-base">
+                    Preparamos cada detalhe com muito amor para celebrar esse dia inesquecível ao lado das pessoas mais especiais das nossas vidas.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Cartão Cerimônia -->
+                <div class="bg-slate-50 border border-royal-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-navy-900 via-royal-600 to-skysoft"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-navy-900 text-white flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
+                        <svg class="w-7 h-7 text-skysoft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+
+                    <h3 id="ceremony-title" class="font-serif text-2xl font-bold text-navy-900 mb-2">Cerimônia Religiosa</h3>
+                    <div class="flex flex-wrap items-center gap-3 text-sm font-medium text-royal-700 mb-4">
+                        <span class="inline-flex items-center gap-1.5 bg-royal-50 px-3 py-1 rounded-full">
+                            📅 <span id="ceremony-date">19 de Dezembro de 2026</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-royal-50 px-3 py-1 rounded-full">
+                            ⏰ <span id="ceremony-time">16h30</span>
+                        </span>
+                    </div>
+
+                    <p id="ceremony-venue" class="font-semibold text-navy-900 text-lg">Capela Santa Luzia</p>
+                    <p id="ceremony-address" class="text-slate-600 text-sm mt-1 mb-6 leading-relaxed">
+                        Av. das Hortênsias, 1450 - Jardim Imperial, São Paulo - SP
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+                        <a id="ceremony-maps-btn" href="#" target="_blank" rel="noopener noreferrer"
+                            class="flex-1 inline-flex items-center justify-center gap-2 bg-royal-700 hover:bg-navy-900 text-white text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Abrir no Maps
+                        </a>
+                        <button onclick="copyAddress('ceremony')"
+                            class="inline-flex items-center justify-center gap-2 bg-white hover:bg-royal-50 text-navy-900 border border-slate-300 text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition-colors">
+                            Copiar Endereço
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Cartão Recepção -->
+                <div class="bg-slate-50 border border-royal-100 rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-skysoft via-royal-600 to-navy-900"></div>
+                    
+                    <div class="w-14 h-14 rounded-2xl bg-royal-700 text-white flex items-center justify-center mb-6 shadow-md group-hover:scale-105 transition-transform">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"></path>
+                        </svg>
+                    </div>
+
+                    <h3 id="reception-title" class="font-serif text-2xl font-bold text-navy-900 mb-2">Recepção & Festa</h3>
+                    <div class="flex flex-wrap items-center gap-3 text-sm font-medium text-royal-700 mb-4">
+                        <span class="inline-flex items-center gap-1.5 bg-royal-50 px-3 py-1 rounded-full">
+                            📅 <span id="reception-date">19 de Dezembro de 2026</span>
+                        </span>
+                        <span class="inline-flex items-center gap-1.5 bg-royal-50 px-3 py-1 rounded-full">
+                            🥂 <span id="reception-time">19h30</span>
+                        </span>
+                    </div>
+
+                    <p id="reception-venue" class="font-semibold text-navy-900 text-lg">Espaço Villa Azul Eventos</p>
+                    <p id="reception-address" class="text-slate-600 text-sm mt-1 mb-6 leading-relaxed">
+                        Rua dos Lírios Brancos, 890 - Alto da Boa Vista, São Paulo - SP
+                    </p>
+
+                    <div class="flex flex-wrap gap-3">
+                        <a id="reception-maps-btn" href="#" target="_blank" rel="noopener noreferrer"
+                            class="flex-1 inline-flex items-center justify-center gap-2 bg-navy-900 hover:bg-royal-700 text-white text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            Abrir no Maps
+                        </a>
+                        <button onclick="copyAddress('reception')"
+                            class="inline-flex items-center justify-center gap-2 bg-white hover:bg-royal-50 text-navy-900 border border-slate-300 text-xs sm:text-sm font-semibold py-3 px-4 rounded-xl transition-colors">
+                            Copiar Endereço
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         3. GALERIA DE FOTOS DO CASAL (COM LIGHTBOX / ZOOM)
+         ===================================================================== -->
+    <section id="galeria" class="py-16 sm:py-24 px-4 bg-navy-900 text-white relative overflow-hidden">
+        <div class="butterfly-float absolute top-12 left-8 opacity-30">
+            <svg class="w-16 h-16 text-royal-400 butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+        <div class="butterfly-float-delayed absolute bottom-10 right-10 opacity-25">
+            <svg class="w-20 h-20 text-white butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+        </div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="text-center mb-14">
+                <span class="text-skysoft font-semibold text-xs uppercase tracking-[0.25em]">Nossa História em Imagens</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-white font-bold mt-2">Momentos do Casal</h2>
+                <p class="text-slate-300 mt-3 max-w-xl mx-auto text-sm sm:text-base">
+                    Clique em qualquer foto para ampliar e reviver conosco alguns dos nossos momentos favoritos.
+                </p>
+            </div>
+
+            <div id="photo-gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         4. LISTA DE PRESENTES & LOJINHA COM CARRINHO INTERATIVO
+         ===================================================================== -->
+    <section id="presentes" class="py-16 sm:py-24 px-4 bg-slate-50 relative">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                <div>
+                    <span class="text-royal-700 font-semibold text-xs uppercase tracking-[0.25em]">Lojinha dos Noivos</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl text-navy-900 font-bold mt-2">Lista de Presentes</h2>
+                    <p class="text-slate-600 mt-3 max-w-2xl text-sm sm:text-base">
+                        Sua presença é o nosso maior presente! Mas, se desejar nos abençoar com um mimo para nosso novo lar ou nossa lua de mel, escolha um item abaixo e adicione ao carrinho.
+                    </p>
+                </div>
+
+                <button onclick="toggleCartDrawer(true)"
+                    class="self-start md:self-auto inline-flex items-center gap-3 bg-navy-900 hover:bg-royal-700 text-white px-6 py-3.5 rounded-2xl shadow-lg transition-all font-semibold text-sm">
+                    <svg class="w-5 h-5 text-skysoft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span>Ver Carrinho (<span id="section-cart-count">0</span>)</span>
+                    <span class="bg-royal-600 px-2.5 py-0.5 rounded-lg text-xs" id="section-cart-total">R$ 0,00</span>
+                </button>
+            </div>
+
+            <!-- Filtros de Categoria da Lojinha -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <button onclick="filterGifts('todos')" class="gift-filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-royal-700 text-white transition-all" data-cat="todos">
+                    Todos os Presentes
+                </button>
+                <button onclick="filterGifts('casa')" class="gift-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-navy-900 border border-slate-200 hover:border-royal-500 transition-all" data-cat="casa">
+                    Casa & Cozinha
+                </button>
+                <button onclick="filterGifts('luademel')" class="gift-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-navy-900 border border-slate-200 hover:border-royal-500 transition-all" data-cat="luademel">
+                    Lua de Mel
+                </button>
+                <button onclick="filterGifts('eletro')" class="gift-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-navy-900 border border-slate-200 hover:border-royal-500 transition-all" data-cat="eletro">
+                    Eletrodomésticos
+                </button>
+            </div>
+
+            <!-- Grade de Produtos -->
+            <div id="gifts-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         5. CONFIRMAÇÃO DE PRESENÇA (RSVP)
+         ===================================================================== -->
+    <section id="rsvp" class="py-16 sm:py-24 px-4 bg-white relative overflow-hidden">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-navy-900 rounded-3xl p-8 sm:p-12 text-white shadow-2xl border border-royal-700/40 relative overflow-hidden">
+                <div class="butterfly-float absolute -top-4 right-6 opacity-30">
+                    <svg class="w-24 h-24 text-skysoft butterfly-wings" viewBox="0 0 64 64" fill="currentColor">
+                        <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+                    </svg>
+                </div>
+
+                <div class="text-center mb-10 relative z-10">
+                    <span class="text-skysoft font-semibold text-xs uppercase tracking-[0.25em]">Sua Presença Importa</span>
+                    <h2 class="font-serif text-3xl sm:text-5xl font-bold mt-2">Confirmar Presença</h2>
+                    <p class="text-slate-300 mt-3 text-sm sm:text-base max-w-lg mx-auto">
+                        Por favor, confirme sua presença até <strong class="text-white">30 de Novembro de 2026</strong> para organizarmos tudo com carinho.
+                    </p>
+                </div>
+
+                <form id="rsvp-form" onsubmit="handleRSVPSubmit(event)" class="space-y-6 relative z-10">
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="rsvp-name" class="block text-xs uppercase tracking-wider text-skysoft font-semibold mb-2">Nome Completo *</label>
+                            <input type="text" id="rsvp-name" required placeholder="Ex: Ana Paula Silva"
+                                class="w-full px-4 py-3.5 rounded-xl bg-navy-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-royal-500 transition-colors">
+                        </div>
+
+                        <div>
+                            <label for="rsvp-phone" class="block text-xs uppercase tracking-wider text-skysoft font-semibold mb-2">WhatsApp / Telefone *</label>
+                            <input type="tel" id="rsvp-phone" required placeholder="(11) 99999-9999"
+                                class="w-full px-4 py-3.5 rounded-xl bg-navy-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-royal-500 transition-colors">
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-6">
+                        <div>
+                            <label for="rsvp-attending" class="block text-xs uppercase tracking-wider text-skysoft font-semibold mb-2">Você vai comparecer? *</label>
+                            <select id="rsvp-attending" required
+                                class="w-full px-4 py-3.5 rounded-xl bg-navy-800 border border-slate-700 text-white focus:outline-none focus:border-royal-500 transition-colors">
+                                <option value="Sim, com certeza!">Sim, com certeza! 🎉</option>
+                                <option value="Infelizmente não poderei ir">Infelizmente não poderei ir 😢</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="rsvp-guests" class="block text-xs uppercase tracking-wider text-skysoft font-semibold mb-2">Total de Pessoas (incluindo você)</label>
+                            <select id="rsvp-guests"
+                                class="w-full px-4 py-3.5 rounded-xl bg-navy-800 border border-slate-700 text-white focus:outline-none focus:border-royal-500 transition-colors">
+                                <option value="1">1 pessoa (Somente eu)</option>
+                                <option value="2">2 pessoas</option>
+                                <option value="3">3 pessoas</option>
+                                <option value="4">4 pessoas</option>
+                                <option value="5">5 pessoas</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="rsvp-notes" class="block text-xs uppercase tracking-wider text-skysoft font-semibold mb-2">Nomes dos Acompanhantes ou Observação</label>
+                        <input type="text" id="rsvp-notes" placeholder="Ex: Acompanhado de Pedro Silva (adulto)"
+                            class="w-full px-4 py-3.5 rounded-xl bg-navy-800 border border-slate-700 text-white placeholder-slate-400 focus:outline-none focus:border-royal-500 transition-colors">
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-4 rounded-xl bg-royal-600 hover:bg-royal-500 text-white font-bold uppercase tracking-wider text-sm shadow-lg transition-all hover:-translate-y-0.5">
+                        Enviar Confirmação de Presença
+                    </button>
+                </form>
+
+                <!-- Lista de Presenças Confirmadas na Sessão -->
+                <div id="rsvp-confirmed-box" class="hidden mt-8 pt-8 border-t border-white/10">
+                    <h3 class="text-sm font-semibold uppercase tracking-wider text-skysoft mb-3">Suas Confirmações Registradas:</h3>
+                    <div id="rsvp-list" class="space-y-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         6. MURAL DE COMENTÁRIOS E RECADOS AOS NOIVOS
+         ===================================================================== -->
+    <section id="recados" class="py-16 sm:py-24 px-4 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center mb-14">
+                <span class="text-royal-700 font-semibold text-xs uppercase tracking-[0.25em]">Carinho em Palavras</span>
+                <h2 class="font-serif text-3xl sm:text-5xl text-navy-900 font-bold mt-2">Mural de Recados</h2>
+                <p class="text-slate-600 mt-3 max-w-xl mx-auto text-sm sm:text-base">
+                    Deixe uma mensagem especial, um conselho ou uma bênção para guardarmos para sempre em nossas lembranças.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-8 items-start">
+                <!-- Formulário de Novo Recado -->
+                <div class="lg:col-span-2 bg-white p-7 rounded-3xl shadow-md border border-royal-100">
+                    <h3 class="font-serif text-xl font-bold text-navy-900 mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-royal-600" viewBox="0 0 64 64" fill="currentColor">
+                            <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+                        </svg>
+                        Escrever Mensagem
+                    </h3>
+
+                    <form id="comment-form" onsubmit="handleCommentSubmit(event)" class="space-y-4">
+                        <div>
+                            <label for="comment-author" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Seu Nome *</label>
+                            <input type="text" id="comment-author" required placeholder="Como deseja assinar?"
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-900 focus:outline-none focus:border-royal-600">
+                        </div>
+
+                        <div>
+                            <label for="comment-relation" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Parentesco / Vínculo</label>
+                            <input type="text" id="comment-relation" placeholder="Ex: Madrinha, Amigo da faculdade, Tia..."
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-900 focus:outline-none focus:border-royal-600">
+                        </div>
+
+                        <div>
+                            <label for="comment-text" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Sua Mensagem aos Noivos *</label>
+                            <textarea id="comment-text" rows="4" required placeholder="Escreva aqui seus votos de felicidade..."
+                                class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-navy-900 focus:outline-none focus:border-royal-600 resize-none"></textarea>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-3.5 rounded-xl bg-navy-900 hover:bg-royal-700 text-white font-semibold text-sm uppercase tracking-wider transition-colors shadow">
+                            Publicar Recado
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Lista de Recados -->
+                <div id="comments-list" class="lg:col-span-3 space-y-4"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================================
+         RODAPÉ
+         ===================================================================== -->
+    <footer class="bg-navy-950 text-slate-300 py-14 px-4 text-center border-t border-white/10">
+        <div class="max-w-2xl mx-auto">
+            <svg class="w-10 h-10 text-royal-400 mx-auto mb-4" viewBox="0 0 64 64" fill="currentColor">
+                <path d="M31 28C23 10 3 6 1 20c-2 12 14 19 28 14-12 5-16 17-7 21 7 3 11-7 11-19 0 12 4 22 11 19 9-4 5-16-7-21 14 5 30-2 28-14-2-14-22-10-30 8z"/>
+            </svg>
+            <p id="footer-names" class="font-script text-4xl sm:text-5xl text-white mb-2">Simone & Robson</p>
+            <p id="footer-date" class="text-xs uppercase tracking-[0.25em] text-skysoft mb-6">19 de Dezembro de 2026</p>
+            <p class="text-xs text-slate-500">Feito com amor para celebrar o início da nossa nova jornada.</p>
+        </div>
+    </footer>
+
+    <!-- =====================================================================
+         MODAL DE ZOOM DA GALERIA DE FOTOS (LIGHTBOX)
+         ===================================================================== -->
+    <div id="lightbox-modal" class="fixed inset-0 z-50 hidden bg-navy-950/95 flex items-center justify-center p-4" onclick="closeLightbox()">
+        <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white/80 hover:text-white bg-white/10 p-3 rounded-full" aria-label="Fechar foto">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="max-w-4xl w-full text-center" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Foto ampliada do casal" class="max-h-[80vh] mx-auto rounded-2xl shadow-2xl border border-white/20 object-contain">
+            <p id="lightbox-caption" class="text-white font-serif italic text-lg mt-4"></p>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         GAVETA LATERAL DO CARRINHO DE PRESENTES & CHECKOUT PIX
+         ===================================================================== -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 z-50 hidden bg-navy-950/70 transition-opacity" onclick="toggleCartDrawer(false)"></div>
+    
+    <aside id="cart-drawer" class="fixed top-0 right-0 bottom-0 z-50 w-full max-w-md bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Cabeçalho do Carrinho -->
+        <div class="bg-navy-900 text-white px-6 py-5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <svg class="w-6 h-6 text-skysoft" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                </svg>
+                <h3 class="font-serif text-xl font-bold">Carrinho de Presentes</h3>
+            </div>
+            <button onclick="toggleCartDrawer(false)" class="p-2 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white" aria-label="Fechar carrinho">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Corpo do Carrinho (Itens ou Checkout PIX) -->
+        <div id="cart-items-view" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+
+        <!-- Tela de Finalização PIX -->
+        <div id="cart-checkout-view" class="hidden flex-1 overflow-y-auto p-6 space-y-5">
+            <button onclick="showCartItemsView()" class="text-xs font-semibold text-royal-700 hover:underline flex items-center gap-1">
+                ← Voltar para os itens do carrinho
+            </button>
+
+            <div class="bg-royal-50 border border-royal-200 rounded-2xl p-5 text-center">
+                <span class="inline-block bg-royal-700 text-white text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full mb-2">Pagamento via PIX</span>
+                <p class="text-xs text-slate-600">Valor Total dos Presentes</p>
+                <p id="checkout-total-value" class="font-serif text-3xl font-bold text-navy-900 my-1">R$ 0,00</p>
+                <p class="text-xs text-slate-500">Favorecido: <strong id="checkout-beneficiary">Simone & Robson</strong></p>
+
+                <!-- QR Code Ilustrativo -->
+                <div class="my-4 bg-white p-3 rounded-xl inline-block border border-slate-200 shadow-sm">
+                    <svg class="w-32 h-32 text-navy-900" viewBox="0 0 100 100" fill="currentColor">
+                        <path d="M10 10h25v25H10V10zm5 5v15h15V15H15zm5 5h5v5h-5v-5zm45-10h25v25H65V10zm5 5v15h15V15H70zm5 5h5v5h-5v-5zM10 65h25v25H10V65zm5 5v15h15V70H15zm5 5h5v5h-5v-5zm25-55h10v10H45V20zm0 15h5v15h-5V35zm10 5h10v10H55V40zM20 45h15v5H20v-5zm20 10h15v10H40V55zm25 10h10v10H65V65zm15 0h10v25H80V65zm-25 15h15v10H55V80z"/>
+                    </svg>
+                </div>
+
+                <div class="text-left">
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">Chave PIX dos Noivos:</label>
+                    <div class="flex items-center gap-2">
+                        <input id="checkout-pix-key" type="text" readonly placeholder="Chave PIX será informada pelos noivos"
+                            class="w-full text-xs bg-white border border-slate-300 rounded-lg px-3 py-2.5 text-navy-900 font-mono">
+                        <button id="copy-pix-key-btn" onclick="copyPixKey()" disabled
+                            class="bg-navy-900 hover:bg-royal-700 disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold px-3 py-2.5 rounded-lg shrink-0">
+                            Copiar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <form onsubmit="completeGiftOrder(event)" class="space-y-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Seu Nome (para sabermos quem presenteou) *</label>
+                    <input type="text" id="gift-sender-name" required placeholder="Ex: Tia Mariana e Família"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-royal-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Cartão de Mensagem no Presente</label>
+                    <textarea id="gift-sender-msg" rows="2" placeholder="Felicidades ao casal!"
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:border-royal-600 resize-none"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 rounded-xl bg-royal-700 hover:bg-navy-900 text-white font-bold text-sm uppercase tracking-wider shadow-lg transition-colors">
+                    Confirmar Envio do Presente
+                </button>
+            </form>
+        </div>
+
+        <!-- Rodapé do Carrinho -->
+        <div id="cart-footer" class="border-t border-slate-200 p-6 bg-slate-50">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-sm font-medium text-slate-600">Total do Carrinho</span>
+                <span id="drawer-total-price" class="font-serif text-2xl font-bold text-navy-900">R$ 0,00</span>
+            </div>
+            <button id="proceed-checkout-btn" onclick="showCheckoutView()" disabled
+                class="w-full py-3.5 rounded-xl bg-royal-700 hover:bg-navy-900 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-sm uppercase tracking-wider transition-colors shadow">
+                Finalizar Presente
+            </button>
+        </div>
+    </aside>
+
+    <!-- =====================================================================
+         JAVASCRIPT PRINCIPAL (DADOS, CARRINHO, CONTAGEM, RSVP & COMENTÁRIOS)
+         ===================================================================== -->
+    <script>
+        // 1. DADOS DAS FOTOS DO CASAL
+        const COUPLE_PHOTOS = [
+            {
+                url: "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=900&q=80",
+                caption: "O pedido mais especial das nossas vidas"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80",
+                caption: "Caminhando lado a lado rumo ao altar"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?auto=format&fit=crop&w=900&q=80",
+                caption: "Ensaio pré-wedding ao entardecer"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=900&q=80",
+                caption: "Cada sorriso compartilhado"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=900&q=80",
+                caption: "Contando os dias para o nosso 'Sim'"
+            },
+            {
+                url: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=900&q=80",
+                caption: "O início da nossa eternidade"
+            }
+        ];
+
+        // 2. DADOS DOS PRESENTES DA LOJINHA
+        const GIFTS_CATALOG = [
+            {
+                id: 1,
+                name: "Jogo de Jantar Porcelana Azul & Branco",
+                category: "casa",
+                categoryLabel: "Casa & Cozinha",
+                price: 380.00,
+                image: "https://images.unsplash.com/photo-1578500494198-246f612d3b3d?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 2,
+                name: "Jantar Romântico na Lua de Mel",
+                category: "luademel",
+                categoryLabel: "Lua de Mel",
+                price: 450.00,
+                image: "https://images.unsplash.com/photo-1544148103-0773bf10d330?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 3,
+                name: "Cafeteira Expresso Automática",
+                category: "eletro",
+                categoryLabel: "Eletrodomésticos",
+                price: 690.00,
+                image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 4,
+                name: "Passeio de Barco ao Pôr do Sol",
+                category: "luademel",
+                categoryLabel: "Lua de Mel",
+                price: 520.00,
+                image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 5,
+                name: "Jogo de Panelas Antiaderente 5 Peças",
+                category: "casa",
+                categoryLabel: "Casa & Cozinha",
+                price: 490.00,
+                image: "https://images.unsplash.com/photo-1584990347449-a2d4c2c044c9?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 6,
+                name: "Robô Aspirador Inteligente",
+                category: "eletro",
+                categoryLabel: "Eletrodomésticos",
+                price: 980.00,
+                image: "https://images.unsplash.com/photo-1558317374-067fb5f30001?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 7,
+                name: "Jogo de Cama King 400 Fios Azul Marinho",
+                category: "casa",
+                categoryLabel: "Casa & Cozinha",
+                price: 340.00,
+                image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&w=700&q=80"
+            },
+            {
+                id: 8,
+                name: "Cota Passagens Aéreas Lua de Mel",
+                category: "luademel",
+                categoryLabel: "Lua de Mel",
+                price: 850.00,
+                image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=700&q=80"
+            }
+        ];
+
+        // 3. COMENTÁRIOS INICIAIS
+        const DEFAULT_COMMENTS = [
+            {
+                author: "Mariana & Lucas",
+                relation: "Padrinhos",
+                date: "Hoje",
+                text: "Que alegria ver esse sonho se tornando realidade! Que Deus abençoe imensamente a união de vocês com muito amor, cumplicidade e leveza."
+            },
+            {
+                author: "Tia Helena",
+                relation: "Família da Noiva",
+                date: "Ontem",
+                text: "Simone & Robson, vocês formam um casal lindo! Já estou contando os dias para celebrar esse dia mágico ao lado de vocês."
+            }
+        ];
+
+        // ESTADO DA APLICAÇÃO
+        let cart = JSON.parse(localStorage.getItem('wedding_cart')) || [];
+        let comments = JSON.parse(localStorage.getItem('wedding_comments')) || DEFAULT_COMMENTS;
+        let rsvps = JSON.parse(localStorage.getItem('wedding_rsvps')) || [];
+        let currentFilter = 'todos';
+
+        // UTILITÁRIOS
+        function formatBRL(value) {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast-container');
+            document.getElementById('toast-message').textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3400);
+        }
+
+        // INICIALIZAÇÃO DOS DADOS DO CONFIG
+        function initWeddingData() {
+            document.title = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName} — Nosso Casamento`;
+            document.getElementById('nav-monogram').innerHTML = `${WEDDING_CONFIG.brideName[0]} <span class="text-royal-400">&</span> ${WEDDING_CONFIG.groomName[0]}`;
+            document.getElementById('hero-couple-names').innerHTML = `${WEDDING_CONFIG.brideName} <span class="text-royal-400">&</span> ${WEDDING_CONFIG.groomName}`;
+            document.getElementById('hero-date').textContent = WEDDING_CONFIG.displayDate;
+            document.getElementById('footer-names').textContent = `${WEDDING_CONFIG.brideName} & ${WEDDING_CONFIG.groomName}`;
+            document.getElementById('footer-date').textContent = WEDDING_CONFIG.displayDate;
+
+            // Cerimônia
+            document.getElementById('ceremony-title').textContent = WEDDING_CONFIG.ceremony.title;
+            document.getElementById('ceremony-date').textContent = WEDDING_CONFIG.displayDate;
+            document.getElementById('ceremony-time').textContent = WEDDING_CONFIG.ceremony.time;
+            document.getElementById('ceremony-venue').textContent = WEDDING_CONFIG.ceremony.venue;
+            document.getElementById('ceremony-address').textContent = WEDDING_CONFIG.ceremony.address;
+            document.getElementById('ceremony-maps-btn').href = WEDDING_CONFIG.ceremony.mapsUrl;
+
+            // Recepção
+            document.getElementById('reception-title').textContent = WEDDING_CONFIG.reception.title;
+            document.getElementById('reception-date').textContent = WEDDING_CONFIG.displayDate;
+            document.getElementById('reception-time').textContent = WEDDING_CONFIG.reception.time;
+            document.getElementById('reception-venue').textContent = WEDDING_CONFIG.reception.venue;
+            document.getElementById('reception-address').textContent = WEDDING_CONFIG.reception.address;
+            document.getElementById('reception-maps-btn').href = WEDDING_CONFIG.reception.mapsUrl;
+
+            // PIX
+            document.getElementById('checkout-pix-key').value = WEDDING_CONFIG.pixKey;
+            document.getElementById('copy-pix-key-btn').disabled = !WEDDING_CONFIG.pixKey;
+            document.getElementById('checkout-beneficiary').textContent = WEDDING_CONFIG.pixBeneficiary;
+        }
+
+        // CONTAGEM REGRESSIVA
+        function updateCountdown() {
+            const target = new Date(WEDDING_CONFIG.weddingDateISO).getTime();
+            const now = new Date().getTime();
+            const diff = Math.max(0, target - now);
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
+            document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('cd-minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('cd-seconds').textContent = String(seconds).padStart(2, '0');
+        }
+
+        // MENU MOBILE
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        // COPIAR ENDEREÇO
+        function copyAddress(type) {
+            const text = type === 'ceremony' ? WEDDING_CONFIG.ceremony.address : WEDDING_CONFIG.reception.address;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Endereço copiado para a área de transferência!");
+            });
+        }
+
+        // GALERIA DE FOTOS & LIGHTBOX
+        function renderGallery() {
+            const grid = document.getElementById('photo-gallery-grid');
+            grid.innerHTML = COUPLE_PHOTOS.map((photo, index) => `
+                <div onclick="openLightbox(${index})" class="group relative rounded-2xl overflow-hidden cursor-pointer border border-white/10 shadow-lg aspect-[4/3] bg-navy-800">
+                    <img src="${photo.url}" alt="${photo.caption}" loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5">
+                        <p class="text-white font-serif italic text-base">${photo.caption}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openLightbox(index) {
+            const photo = COUPLE_PHOTOS[index];
+            document.getElementById('lightbox-img').src = photo.url;
+            document.getElementById('lightbox-caption').textContent = photo.caption;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.add('hidden');
+        }
+
+        // LOJINHA DE PRESENTES & CARRINHO
+        function filterGifts(category) {
+            currentFilter = category;
+            document.querySelectorAll('.gift-filter-btn').forEach(btn => {
+                if (btn.dataset.cat === category) {
+                    btn.className = "gift-filter-btn active px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-royal-700 text-white transition-all";
+                } else {
+                    btn.className = "gift-filter-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold bg-white text-navy-900 border border-slate-200 hover:border-royal-500 transition-all";
+                }
+            });
+            renderGifts();
+        }
+
+        function renderGifts() {
+            const grid = document.getElementById('gifts-grid');
+            const filtered = currentFilter === 'todos'
+                ? GIFTS_CATALOG
+                : GIFTS_CATALOG.filter(item => item.category === currentFilter);
+
+            grid.innerHTML = filtered.map(gift => `
+                <div class="bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+                    <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                        <img src="${gift.image}" alt="${gift.name}" loading="lazy"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <span class="absolute top-3 left-3 bg-navy-900/85 text-skysoft text-[11px] font-semibold px-3 py-1 rounded-full">
+                            ${gift.categoryLabel}
+                        </span>
+                    </div>
+                    <div class="p-5 flex-1 flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-serif font-bold text-navy-900 text-lg leading-snug mb-2">${gift.name}</h3>
+                        </div>
+                        <div class="pt-3 border-t border-slate-100 mt-3">
+                            <p class="text-xl font-bold text-royal-700 mb-3">${formatBRL(gift.price)}</p>
+                            <button onclick="addToCart(${gift.id})"
+                                class="w-full py-2.5 px-4 rounded-xl bg-royal-700 hover:bg-navy-900 text-white text-xs sm:text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Adicionar ao Carrinho
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveCart() {
+            localStorage.setItem('wedding_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function addToCart(giftId) {
+            const product = GIFTS_CATALOG.find(g => g.id === giftId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === giftId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            saveCart();
+            showToast(`"${product.name}" adicionado ao carrinho!`);
+        }
+
+        function updateItemQty(giftId, delta) {
+            const index = cart.findIndex(item => item.id === giftId);
+            if (index === -1) return;
+
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            saveCart();
+        }
+
+        function updateCartUI() {
+            const totalItems = cart.reduce((acc, item) => acc + item.qty, 0);
+            const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+            document.getElementById('floating-cart-badge').textContent = totalItems;
+            document.getElementById('nav-cart-badge').textContent = totalItems;
+            document.getElementById('section-cart-count').textContent = totalItems;
+            document.getElementById('section-cart-total').textContent = formatBRL(totalPrice);
+            document.getElementById('drawer-total-price').textContent = formatBRL(totalPrice);
+            document.getElementById('checkout-total-value').textContent = formatBRL(totalPrice);
+
+            const checkoutBtn = document.getElementById('proceed-checkout-btn');
+            checkoutBtn.disabled = totalItems === 0;
+
+            const container = document.getElementById('cart-items-view');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 text-slate-400">
+                        <svg class="w-16 h-16 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                        </svg>
+                        <p class="font-medium text-slate-600">Seu carrinho está vazio</p>
+                        <p class="text-xs mt-1">Escolha um presente especial na lista para os noivos.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-3.5 bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 rounded-xl object-cover shrink-0">
+                        <div class="flex-1 min-w-0">
+                            <h4 class="font-semibold text-navy-900 text-sm truncate">${item.name}</h4>
+                            <p class="text-royal-700 font-bold text-sm mt-0.5">${formatBRL(item.price)}</p>
+                            <div class="flex items-center gap-2 mt-2">
+                                <button onclick="updateItemQty(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 text-navy-900 font-bold hover:bg-slate-100">-</button>
+                                <span class="text-xs font-bold w-5 text-center">${item.qty}</span>
+                                <button onclick="updateItemQty(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-white border border-slate-300 text-navy-900 font-bold hover:bg-slate-100">+</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleCartDrawer(open) {
+            const overlay = document.getElementById('cart-drawer-overlay');
+            const drawer = document.getElementById('cart-drawer');
+            if (open) {
+                showCartItemsView();
+                overlay.classList.remove('hidden');
+                setTimeout(() => drawer.classList.remove('translate-x-full'), 10);
+            } else {
+                drawer.classList.add('translate-x-full');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+        }
+
+        function showCheckoutView() {
+            document.getElementById('cart-items-view').classList.add('hidden');
+            document.getElementById('cart-footer').classList.add('hidden');
+            document.getElementById('cart-checkout-view').classList.remove('hidden');
+        }
+
+        function showCartItemsView() {
+            document.getElementById('cart-checkout-view').classList.add('hidden');
+            document.getElementById('cart-items-view').classList.remove('hidden');
+            document.getElementById('cart-footer').classList.remove('hidden');
+        }
+
+        function copyPixKey() {
+            if (!WEDDING_CONFIG.pixKey) {
+                showToast("A chave PIX ainda não foi configurada.");
+                return;
+            }
+
+            navigator.clipboard.writeText(WEDDING_CONFIG.pixKey).then(() => {
+                showToast("Chave PIX copiada com sucesso!");
+            });
+        }
+
+        function completeGiftOrder(e) {
+            e.preventDefault();
+            const sender = document.getElementById('gift-sender-name').value.trim();
+            const msg = document.getElementById('gift-sender-msg').value.trim();
+
+            if (msg) {
+                comments.unshift({
+                    author: sender,
+                    relation: "Presenteou os noivos 🎁",
+                    date: "Agora mesmo",
+                    text: msg
+                });
+                localStorage.setItem('wedding_comments', JSON.stringify(comments));
+                renderComments();
+            }
+
+            cart = [];
+            saveCart();
+            e.target.reset();
+            toggleCartDrawer(false);
+            showToast(`Muito obrigado pelo presente, ${sender}!`);
+        }
+
+        // RSVP (CONFIRMAÇÃO DE PRESENÇA)
+        function handleRSVPSubmit(e) {
+            e.preventDefault();
+            const entry = {
+                name: document.getElementById('rsvp-name').value.trim(),
+                phone: document.getElementById('rsvp-phone').value.trim(),
+                attending: document.getElementById('rsvp-attending').value,
+                guests: document.getElementById('rsvp-guests').value,
+                notes: document.getElementById('rsvp-notes').value.trim()
+            };
+
+            rsvps.unshift(entry);
+            localStorage.setItem('wedding_rsvps', JSON.stringify(rsvps));
+            renderRSVPs();
+            e.target.reset();
+            showToast(`Presença registrada para ${entry.name}!`);
+        }
+
+        function renderRSVPs() {
+            const box = document.getElementById('rsvp-confirmed-box');
+            const list = document.getElementById('rsvp-list');
+            if (rsvps.length === 0) {
+                box.classList.add('hidden');
+                return;
+            }
+            box.classList.remove('hidden');
+            list.innerHTML = rsvps.map(item => `
+                <div class="bg-navy-800/90 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm flex flex-wrap justify-between gap-2">
+                    <div>
+                        <strong class="text-white">${item.name}</strong>
+                        <span class="text-slate-400">(${item.guests} pessoa(s))</span>
+                        ${item.notes ? `<p class="text-slate-400 text-xs mt-0.5">${item.notes}</p>` : ''}
+                    </div>
+                    <span class="text-skysoft font-semibold">${item.attending}</span>
+                </div>
+            `).join('');
+        }
+
+        // MURAL DE COMENTÁRIOS
+        function handleCommentSubmit(e) {
+            e.preventDefault();
+            const newComment = {
+                author: document.getElementById('comment-author').value.trim(),
+                relation: document.getElementById('comment-relation').value.trim() || "Convidado(a)",
+                date: "Agora mesmo",
+                text: document.getElementById('comment-text').value.trim()
+            };
+
+            comments.unshift(newComment);
+            localStorage.setItem('wedding_comments', JSON.stringify(comments));
+            renderComments();
+            e.target.reset();
+            showToast("Recado publicado no mural com sucesso!");
+        }
+
+        function renderComments() {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = comments.map(c => `
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80">
+                    <div class="flex items-center justify-between mb-2">
+                        <div>
+                            <h4 class="font-bold text-navy-900 text-base">${c.author}</h4>
+                            <span class="text-xs text-royal-700 font-medium">${c.relation}</span>
+                        </div>
+                        <span class="text-xs text-slate-400">${c.date}</span>
+                    </div>
+                    <p class="text-slate-600 text-sm leading-relaxed mt-2">"${c.text}"</p>
+                </div>
+            `).join('');
+        }
+
+        // INICIALIZAÇÃO GERAL
+        document.addEventListener('DOMContentLoaded', () => {
+            initWeddingData();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+            renderGallery();
+            renderGifts();
+            updateCartUI();
+            renderRSVPs();
+            renderComments();
+        });
+    </script>
+</body>
+</html>
